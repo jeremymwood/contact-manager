@@ -42,7 +42,13 @@ public class ContactManager {
         return contacts;
     }
 
+    public static ArrayList<Contact> overrideContacts() {
+        ArrayList<Contact> contacts2 = new ArrayList<>();
+        return contacts2;
+    }
+
     public static void addContact(ArrayList<Contact> contacts) {
+        System.out.println(contacts);
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter name: ");
         String name = scanner.nextLine();
@@ -51,30 +57,35 @@ public class ContactManager {
         System.out.println("Contact added.");
         Contact aNewContact =  Contact.add(new Contact(name, phoneNumber));
         contacts.add(aNewContact);
+//        scanner.close();
+        System.out.println(contacts);
+        overrideContacts();
     }
 
     public static void deleteContact(ArrayList<Contact> contacts) {
-//        Contact aNewContact =  Contact.add(new Contact(name, phoneNumber));
-
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the contact name to delete: ");
         String name = scanner.nextLine();
-        scanner.close();
+//        scanner.close();
         System.out.println(contacts);
-
         for (int i = 0; i < contacts.size(); i++) {
             if (contacts.get(i).contactName.contains(name)) {
-                contacts.remove(contacts.get(i));
                 System.out.println("deleting: " + contacts.get(i).contactName);
+                contacts.remove(contacts.get(i));
             }
         }
-//        for (Contact contact : contacts) {
-//            if (contact.contactName.contains(name)) {
-////                contacts.remove(contact);
-//                System.out.println("deleting: " + contact.contactName);
-//            }
-//        }
         System.out.println(contacts);
+        overrideContacts();
+    }
+    public static void printContacts(ArrayList<Contact> contacts) {
+        System.out.println(contacts);
+        System.out.printf("---------------------------------\n");
+        System.out.printf("| %-15s| %-13s|\n", "Name", "Number");
+        System.out.printf("---------------------------------\n");
+        for (int i = 0; i < contacts.size(); i++) {
+        System.out.printf("| %-15s| %-13s|\n", contacts.get(i).contactName, contacts.get(i).contactNumber);
+        }
+        System.out.printf("---------------------------------\n");
     }
 
     public static void searchContact(ArrayList<Contact> contacts) {
@@ -116,12 +127,13 @@ public class ContactManager {
 
     public static void main(String[] args) {
         ArrayList<Contact> contacts = loadContacts();
+////        System.out.println(contacts);
+//
+//        int userMenueChoice = showMainMenu();
+//        getCategoryName(userMenueChoice, contacts);
 
-
-        int userMenueChoice = showMainMenu();
-        getCategoryName(userMenueChoice, contacts);
-
-
+//        System.out.println(contacts);
+        printContacts(contacts);
 
 
     }
