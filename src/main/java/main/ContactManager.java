@@ -20,7 +20,7 @@ public class ContactManager {
         int menueChoice = input.nextInt();
         return menueChoice;
     }
-//
+
 
     public static ArrayList<Contact> loadContacts() {
         ArrayList<Contact> contacts = new ArrayList<>();
@@ -53,14 +53,60 @@ public class ContactManager {
         contacts.add(aNewContact);
     }
 
+    public static void deleteContact(ArrayList<Contact> contacts) {
+//        Contact aNewContact =  Contact.add(new Contact(name, phoneNumber));
 
-    public static void getCategoryName(int userMenueChoice) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the contact name to delete: ");
+        String name = scanner.nextLine();
+        scanner.close();
+        System.out.println(contacts);
+
+        for (int i = 0; i < contacts.size(); i++) {
+            if (contacts.get(i).contactName.contains(name)) {
+                contacts.remove(contacts.get(i));
+                System.out.println("deleting: " + contacts.get(i).contactName);
+            }
+        }
+//        for (Contact contact : contacts) {
+//            if (contact.contactName.contains(name)) {
+////                contacts.remove(contact);
+//                System.out.println("deleting: " + contact.contactName);
+//            }
+//        }
+        System.out.println(contacts);
+    }
+
+    public static void searchContact(ArrayList<Contact> contacts) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the contact name: ");
+        String name = scanner.nextLine();
+        scanner.close();
+        for (Contact contact : contacts) {
+            if (contact.contactName.contains(name)) {
+                System.out.println(contact.contactName + " | " + contact.contactNumber);
+            }
+        }
+    }
+
+
+
+    public static void getCategoryName(int userMenueChoice, ArrayList<Contact> contacts) {
         switch (userMenueChoice) {
             case 1:
                 System.out.println(loadContacts());
                 break;
             case 2:
-//                addContact();
+                addContact(contacts);
+                break;
+            case 3:
+                searchContact(contacts);
+                break;
+            case 4:
+                deleteContact(contacts);
+                break;
+            case 5:
+                System.out.println("Goodbye...");
                 break;
             default:
                 System.out.println("That wasn't a proper input");
@@ -68,25 +114,12 @@ public class ContactManager {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
     public static void main(String[] args) {
         ArrayList<Contact> contacts = loadContacts();
-        System.out.println(contacts);
-        addContact(contacts);
-        System.out.println(contacts);
+
 
         int userMenueChoice = showMainMenu();
-        getCategoryName(userMenueChoice);
+        getCategoryName(userMenueChoice, contacts);
 
 
 
