@@ -20,7 +20,7 @@ public class ContactManager {
         int menueChoice = input.nextInt();
         return menueChoice;
     }
-
+//
 
     public static ArrayList<Contact> loadContacts() {
         ArrayList<Contact> contacts = new ArrayList<>();
