@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ContactManager {
-
     public static void showMainMenu() {
         System.out.println("1. View contacts.");
         System.out.println("2. Add a new contact.");
@@ -46,8 +45,9 @@ public class ContactManager {
         String name = scanner.nextLine();
         System.out.print("Enter phone number: ");
         String phoneNumber = scanner.nextLine();
+        String number = phoneNumber.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "$1-$2-$3");
         System.out.println("Contact added.");
-        Contact aNewContact = Contact.add(new Contact(name, phoneNumber));
+        Contact aNewContact = Contact.add(new Contact(name, number));
         contacts.add(aNewContact);
         printContacts(contacts);
     }
@@ -101,11 +101,6 @@ public class ContactManager {
         }
         System.out.printf("---------------------------------\n");
     }
-
-
-
-
-
 
 
     public static void main(String[] args) {
