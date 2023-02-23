@@ -71,7 +71,7 @@ public class ContactManager {
         System.out.print("Enter the contact name: ");
         String name = scanner.nextLine();
         for (Contact contact : contacts) {
-            if (contact.contactName.contains(name)) {
+            if (contact.contactName.contains(capitalizeWords(name))) {
                 System.out.printf("""
                     
                     ---------------------------------
@@ -82,7 +82,6 @@ public class ContactManager {
                 System.out.printf("---------------------------------\n");
                 System.out.printf("| %-15s| %-13s|\n", contact.contactName, contact.contactNumber);
                 System.out.printf("---------------------------------\n");
-
             }
         }
     }
