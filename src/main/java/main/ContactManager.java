@@ -9,6 +9,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ContactManager {
+
+    public static void draw(){
+        System.out.println("""
+                ______ _                       ______             _   \s
+                | ___ | |                      | ___ \\           | |  \s
+                | |_/ | |__   ___  _ __   ___  | |_/ / ___   ___ | | __
+                |  __/| '_ \\ / _ \\| '_ \\ / _ \\ | ___ \\/ _ \\ / _ \\| |/ /
+                | |   | | | | (_) | | | |  __/ | |_/ | (_) | (_) |   <\s
+                \\_|   |_| |_|\\___/|_| |_|\\___| \\____/ \\___/ \\___/|_|\\_\\
+                """);
+    }
     public static void showMainMenu() {
         System.out.println("1. View contacts.");
         System.out.println("2. Add a new contact.");
@@ -47,7 +58,7 @@ public class ContactManager {
         String phoneNumber = scanner.nextLine();
         String number = phoneNumber.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "$1-$2-$3");
         System.out.println("Contact added.");
-        Contact aNewContact = Contact.add(new Contact(name, number));
+        Contact aNewContact = Contact.add(new Contact(capitalizeWords(name), number));
         contacts.add(aNewContact);
         printContacts(contacts);
     }
@@ -61,7 +72,17 @@ public class ContactManager {
         String name = scanner.nextLine();
         for (Contact contact : contacts) {
             if (contact.contactName.contains(name)) {
-                System.out.println(contact.contactName + " | " + contact.contactNumber);
+                System.out.printf("""
+                    
+                    ---------------------------------
+                    | SEARCH RESULTS                |
+                    ---------------------------------
+                    """);
+                System.out.printf("| %-15s| %-13s|\n", "Name", "Number");
+                System.out.printf("---------------------------------\n");
+                System.out.printf("| %-15s| %-13s|\n", contact.contactName, contact.contactNumber);
+                System.out.printf("---------------------------------\n");
+
             }
         }
     }
@@ -72,7 +93,7 @@ public class ContactManager {
         String name = scanner.nextLine();
 
         for (int i = contacts.size() -1; i >= 0; i--) {
-            if (contacts.get(i).contactName.contains(name)) {
+            if (contacts.get(i).contactName.contains(capitalizeWords(name))) {
                 System.out.println("deleting: " + contacts.get(i).contactName);
                 contacts.remove(contacts.get(i));
             }
@@ -102,11 +123,27 @@ public class ContactManager {
         System.out.printf("---------------------------------\n");
     }
 
+    public static String capitalizeWords(String input) {
+        String[] words = input.split("\\s+");
+        StringBuilder capitalized = new StringBuilder();
+        for (String word : words) {
+            if (word.length() > 0) {
+                capitalized.append(Character.toUpperCase(word.charAt(0)));
+                if (word.length() > 1) {
+                    capitalized.append(word.substring(1));
+                }
+            }
+            capitalized.append(" ");
+        }
+        return capitalized.toString().trim();
+    }
+
 
     public static void main(String[] args) {
         ArrayList<Contact> contacts = loadContacts();
         Scanner scanner = new Scanner(System.in);
         String choice;
+        draw();
         do {
             showMainMenu();
             choice = scanner.nextLine();
