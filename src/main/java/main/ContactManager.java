@@ -1,12 +1,12 @@
 package main;
 
-        import java.io.File;
-        import java.io.FileWriter;
-        import java.io.IOException;
-        import java.nio.file.Path;
-        import java.nio.file.Paths;
-        import java.util.ArrayList;
-        import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ContactManager {
 
@@ -21,21 +21,17 @@ public class ContactManager {
     public static final String ANSI_WHITE = "\u001B[37m";
 
     public static void draw(){
-        System.out.println(ANSI_GREEN +
-                """
-                ______ _                       ______             _   \s
-                | ___ | |                      | ___ \\           | |  \s
-                | |_/ | |__   ___  _ __   ___  | |_/ / ___   ___ | | __
-                |  __/| '_ \\ / _ \\| '_ \\ / _ \\ | ___ \\/ _ \\ / _ \\| |/ /
-                | |   | | | | (_) | | | |  __/ | |_/ | (_) | (_) |   <\s
-                \\_|   |_| |_|\\___/|_| |_|\\___| \\____/ \\___/ \\___/|_|\\_\\
-                """ + ANSI_RESET);
+        System.out.println(ANSI_GREEN + """
+                
+                █▀▀ █▀█ █▄░█ ▀█▀ ▄▀█ █▀▀ ▀█▀ █▀   █▀▄▀█ ▄▀█ █▄░█ ▄▀█ █▀▀ █▀▀ █▀█
+                █▄▄ █▄█ █░▀█ ░█░ █▀█ █▄▄ ░█░ ▄█   █░▀░█ █▀█ █░▀█ █▀█ █▄█ ██▄ █▀▄
+                """);
     }
     public static void showMainMenu() {
         System.out.println("1. View contacts.");
-        System.out.println(ANSI_BLUE + "2. Add a new contact." + ANSI_RESET);
-        System.out.println("3. Search a contact by name.");
-        System.out.println(ANSI_RED + "4. Delete an existing contact." + ANSI_RESET);
+        System.out.println("2. " + ANSI_BLUE + "Add " + ANSI_GREEN + "a new contact.");
+        System.out.println("3. " + ANSI_YELLOW + "Search " + ANSI_GREEN + "contact by name.");
+        System.out.println("4. " + ANSI_RED + "Delete " + ANSI_GREEN + "an existing contact.");
         System.out.println("5. Exit.");
         System.out.print("Enter an option (1, 2, 3, 4 or 5): ");
     }
@@ -62,13 +58,17 @@ public class ContactManager {
     }
 
     public static void addContact(ArrayList<Contact> contacts) {
+        System.out.println(ANSI_BLUE + """
+                ▄▀█ █▀▄ █▀▄   █▀▀ █▀█ █▄░█ ▀█▀ ▄▀█ █▀▀ ▀█▀
+                █▀█ █▄▀ █▄▀   █▄▄ █▄█ █░▀█ ░█░ █▀█ █▄▄ ░█░
+                """);
         Scanner scanner = new Scanner(System.in);
-        System.out.print(ANSI_BLUE + "Enter name: " + ANSI_RESET);
+        System.out.print("Enter name: ");
         String name = scanner.nextLine();
-        System.out.print(ANSI_BLUE + "Enter phone number: " + ANSI_RESET);
+        System.out.print("Enter phone number: ");
         String phoneNumber = scanner.nextLine();
         String number = phoneNumber.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "$1-$2-$3");
-        System.out.println(ANSI_BLUE + "Contact added." + ANSI_RESET);
+        System.out.println("Contact added.\n" + ANSI_GREEN);
         Contact aNewContact = Contact.add(new Contact(capitalizeWords(name), number));
         contacts.add(aNewContact);
         printContacts(contacts);
@@ -78,6 +78,11 @@ public class ContactManager {
 
 
     public static void searchContact(ArrayList<Contact> contacts) {
+        System.out.println(ANSI_YELLOW + """
+                
+                █▀ █▀▀ ▄▀█ █▀█ █▀▀ █░█   █▀▀ █▀█ █▄░█ ▀█▀ ▄▀█ █▀▀ ▀█▀
+                ▄█ ██▄ █▀█ █▀▄ █▄▄ █▀█   █▄▄ █▄█ █░▀█ ░█░ █▀█ █▄▄ ░█░
+                """);
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the contact name: ");
         String name = scanner.nextLine();
@@ -99,16 +104,21 @@ public class ContactManager {
     }
 
     public static void deleteContact(ArrayList<Contact> contacts) {
+        System.out.println(ANSI_RED + """
+                
+                █▀▄ █▀▀ █░░ █▀▀ ▀█▀ █▀▀   █▀▀ █▀█ █▄░█ ▀█▀ ▄▀█ █▀▀ ▀█▀
+                █▄▀ ██▄ █▄▄ ██▄ ░█░ ██▄   █▄▄ █▄█ █░▀█ ░█░ █▀█ █▄▄ ░█░
+                """);
         Scanner scanner = new Scanner(System.in);
-        System.out.print(ANSI_RED + "Enter the contact name to delete: " + ANSI_RESET);
+        System.out.print("Enter the contact name to delete: ");
         String name = scanner.nextLine();
 
         for (int i = contacts.size() -1; i >= 0; i--) {
             if (contacts.get(i).contactName.contains(capitalizeWords(name))) {
-                System.out.println(ANSI_RED + "Would you like to delete " + contacts.get(i).contactName + "(yes/no) :" + ANSI_RESET);
+                System.out.println("Would you like to delete " + contacts.get(i).contactName + "(yes/no) :");
                 String deleteChoice = scanner.nextLine();
                 if (deleteChoice.equalsIgnoreCase("yes")){
-                    System.out.println(ANSI_RED + "Deleting: " + contacts.get(i).contactName + ANSI_RESET);
+                    System.out.println("Deleting: " + contacts.get(i).contactName);
                     contacts.remove(contacts.get(i));
                 }
             }
@@ -129,7 +139,7 @@ public class ContactManager {
     }
 
     public static void printContacts(ArrayList<Contact> contacts) {
-        System.out.printf("---------------------------------\n");
+        System.out.printf(ANSI_GREEN + "---------------------------------\n");
         System.out.printf("| %-15s| %-13s|\n", "Name", "Number");
         System.out.printf("---------------------------------\n");
         for (int i = 0; i < contacts.size(); i++) {
