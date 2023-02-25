@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
+
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -29,9 +30,9 @@ public class ContactManager {
     }
     public static void showMainMenu() {
         System.out.println("1. View contacts.");
-        System.out.println("2. " + ANSI_BLUE + "Add " + ANSI_GREEN + "a new contact.");
-        System.out.println("3. " + ANSI_YELLOW + "Search " + ANSI_GREEN + "contact by name.");
-        System.out.println("4. " + ANSI_RED + "Delete " + ANSI_GREEN + "an existing contact.");
+        System.out.println(ANSI_BLUE + "2. Add a new contact.");
+        System.out.println(ANSI_YELLOW + "3. Search contact by name.");
+        System.out.println(ANSI_RED + "4. Delete an existing contact." + ANSI_GREEN);
         System.out.println("5. Exit.");
         System.out.print("Enter an option (1, 2, 3, 4 or 5): ");
     }
@@ -79,7 +80,6 @@ public class ContactManager {
 
     public static void searchContact(ArrayList<Contact> contacts) {
         System.out.println(ANSI_YELLOW + """
-                
                 █▀ █▀▀ ▄▀█ █▀█ █▀▀ █░█   █▀▀ █▀█ █▄░█ ▀█▀ ▄▀█ █▀▀ ▀█▀
                 ▄█ ██▄ █▀█ █▀▄ █▄▄ █▀█   █▄▄ █▄█ █░▀█ ░█░ █▀█ █▄▄ ░█░
                 """);
@@ -88,7 +88,7 @@ public class ContactManager {
         String name = scanner.nextLine();
         for (Contact contact : contacts) {
             if (contact.contactName.contains(capitalizeWords(name))) {
-                System.out.printf("""
+                System.out.printf(ANSI_YELLOW + """
                     
                     ---------------------------------
                     | SEARCH RESULTS                |
@@ -97,7 +97,7 @@ public class ContactManager {
                 System.out.printf("| %-15s| %-13s|\n", "Name", "Number");
                 System.out.printf("---------------------------------\n");
                 System.out.printf("| %-15s| %-13s|\n", contact.contactName, contact.contactNumber);
-                System.out.printf("---------------------------------\n");
+                System.out.printf("---------------------------------\n" + ANSI_GREEN);
 
             }
         }
@@ -105,7 +105,6 @@ public class ContactManager {
 
     public static void deleteContact(ArrayList<Contact> contacts) {
         System.out.println(ANSI_RED + """
-                
                 █▀▄ █▀▀ █░░ █▀▀ ▀█▀ █▀▀   █▀▀ █▀█ █▄░█ ▀█▀ ▄▀█ █▀▀ ▀█▀
                 █▄▀ ██▄ █▄▄ ██▄ ░█░ ██▄   █▄▄ █▄█ █░▀█ ░█░ █▀█ █▄▄ ░█░
                 """);
@@ -139,13 +138,13 @@ public class ContactManager {
     }
 
     public static void printContacts(ArrayList<Contact> contacts) {
-        System.out.printf(ANSI_GREEN + "---------------------------------\n");
-        System.out.printf("| %-15s| %-13s|\n", "Name", "Number");
-        System.out.printf("---------------------------------\n");
+        System.out.printf(ANSI_GREEN + "-----------------------------------\n");
+        System.out.printf("| %-17s| %-13s|\n", "Name", "Number");
+        System.out.printf("-----------------------------------\n");
         for (int i = 0; i < contacts.size(); i++) {
-            System.out.printf("| %-15s| %-13s|\n", contacts.get(i).contactName, contacts.get(i).contactNumber);
+            System.out.printf("| %-17s| %-13s|\n", contacts.get(i).contactName, contacts.get(i).contactNumber);
         }
-        System.out.printf("---------------------------------\n");
+        System.out.printf("-----------------------------------\n");
     }
 
     public static String capitalizeWords(String input) {
@@ -177,34 +176,37 @@ public class ContactManager {
                 case "1":
                     System.out.println(" ");
                     printContacts(contacts);
-                    System.out.println(" ");
+//                    System.out.println(" ");
                     break;
                 case "2":
                     System.out.println(" ");
                     addContact(contacts);
                     saveContacts(contacts);
-                    System.out.println(" ");
+//                    System.out.println(" ");
                     break;
                 case "3":
                     System.out.println(" ");
                     searchContact(contacts);
-                    System.out.println(" ");
+//                    System.out.println(" ");
                     break;
                 case "4":
                     System.out.println(" ");
                     deleteContact(contacts);
                     saveContacts(contacts);
-                    System.out.println(" ");
+//                    System.out.println(" ");
                     break;
                 case "5":
                     System.out.println(" ");
-                    System.out.println("Goodbye...");
-                    System.out.println(" ");
+                    System.out.println(ANSI_PURPLE + """
+                            █▀▀ █▀█ █▀█ █▀▄ █▄▄ █▄█ █▀▀
+                            █▄█ █▄█ █▄█ █▄▀ █▄█ ░█░ ██▄
+                            """ + ANSI_GREEN);
+//                    System.out.println(" ");
                     break;
                 default:
                     System.out.println(" ");
                     System.out.println("Invalid choice, please try again.");
-                    System.out.println(" ");
+//                    System.out.println(" ");
             }
         } while (!choice.equals("5"));
         saveContacts(contacts);
