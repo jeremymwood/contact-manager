@@ -86,21 +86,21 @@ public class ContactManager {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the contact name: ");
         String name = scanner.nextLine();
+        System.out.printf(ANSI_YELLOW + """
+            
+            ---------------------------------
+            | SEARCH RESULTS                |
+            ---------------------------------
+            """);
+        System.out.printf("| %-15s| %-13s|\n", "Name", "Number");
+        System.out.printf("---------------------------------\n");
         for (Contact contact : contacts) {
             if (contact.contactName.contains(capitalizeWords(name))) {
-                System.out.printf(ANSI_YELLOW + """
-                    
-                    ---------------------------------
-                    | SEARCH RESULTS                |
-                    ---------------------------------
-                    """);
-                System.out.printf("| %-15s| %-13s|\n", "Name", "Number");
-                System.out.printf("---------------------------------\n");
                 System.out.printf("| %-15s| %-13s|\n", contact.contactName, contact.contactNumber);
-                System.out.printf("---------------------------------\n" + ANSI_GREEN);
 
             }
         }
+                System.out.printf("---------------------------------\n" + ANSI_GREEN);
     }
 
     public static void deleteContact(ArrayList<Contact> contacts) {
